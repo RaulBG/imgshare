@@ -4,8 +4,9 @@ const { randomNumber } = require('../helpers/libs')
 const fs               = require('fs-extra')
 const { Image }        = require('../models')
 
-ctrl.index = (req, res) => {
-    
+ctrl.index = async (req, res) => {
+    const image = await Image.findOne({filename: {$regex: req.params.image_id}})
+    res.render('image', { image })
 }
 
 ctrl.create = (req, res) => {
@@ -26,8 +27,7 @@ ctrl.create = (req, res) => {
                     description: req.body.description
                 })
                 const imageSaved = await newImg.save()
-                // res.redirect('/images')
-                res.send('works')
+                res.redirect('/images/' + imgName)
             } else {
                 await fs.unlink(temp)
                 res.status(500).json({
