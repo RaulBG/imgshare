@@ -6,8 +6,9 @@ const { Image, Comment } = require('../models')
 const md5                = require('md5')
 
 ctrl.index = async (req, res) => {
-    const image = await Image.findOne({filename: {$regex: req.params.image_id}})
-    res.render('image', { image })
+    const image    = await Image.findOne({filename: {$regex: req.params.image_id}})
+    const comments = await Comment.find({image_id : image._id})
+    res.render('image', { image, comments })
 }
 
 ctrl.create = (req, res) => {
