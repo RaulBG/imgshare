@@ -1,4 +1,4 @@
-const ctrl = {}
+const ctrl      = {}
 const { Image } = require('../models/index')
 
 ctrl.index = async (req, res) => {
